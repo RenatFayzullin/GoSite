@@ -2,22 +2,24 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 )
 
 type User struct {
-	name                  string
-	age                   uint16
-	money                 int16
-	avg_grades, happiness float64
+	Name                  string
+	Age                   uint16
+	Money                 int16
+	Avg_grades, happiness float64
+	Hobbies               []string
 }
 
 func (user *User) getAllInfo() string {
-	return fmt.Sprintf("User name is: %s, Age is %d, Money is %d", user.name, user.age, user.money)
+	return fmt.Sprintf("User name is: %s, Age is %d, Money is %d", user.Name, user.Age, user.Money)
 }
 
 func (user *User) setNewName(name string) {
-	user.name = name
+	user.Name = name
 }
 
 func main() {
@@ -25,11 +27,10 @@ func main() {
 }
 
 func home_page(w http.ResponseWriter, r *http.Request) {
-	bob := User{"Bob", 25, -50, 4.2, 0.8}
+	bob := User{"Bob", 25, -50, 4.2, 0.8, []string{"Soccer", "Dance"}}
 	bob.setNewName("Renat")
-	fmt.Fprintf(w, bob.getAllInfo())
-	fmt.Fprintf(w, "Hello")
-	//tmpl, _ := teamplate.parseFiles()
+	tmpl, _ := template.ParseFiles("templates/home_page.html")
+	tmpl.Execute(w, bob)
 
 }
 
