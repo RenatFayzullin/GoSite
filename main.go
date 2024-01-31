@@ -28,6 +28,7 @@ func home_page(w http.ResponseWriter, r *http.Request) {
 	bob := User{"Bob", 25, -50, 4.2, 0.8}
 	bob.setNewName("Renat")
 	fmt.Fprintf(w, bob.getAllInfo())
+	fmt.Fprintf(w, "Hello")
 	//tmpl, _ := teamplate.parseFiles()
 
 }
